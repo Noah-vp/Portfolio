@@ -95,6 +95,7 @@ body{
 }
 .object-text{
     padding-left: 50px;
+    padding-right: 50px;
 }
 .object-header{
     font-family: custom;
