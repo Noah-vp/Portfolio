@@ -1,15 +1,25 @@
-# Use nginx alpine image for a lightweight static file server
-FROM nginx:alpine
+# Stage 1: Build
+FROM node:22-alpine AS builder
+WORKDIR /app
 
-# Copy all static files to nginx html directory
-COPY . /usr/share/nginx/html
+COPY package*.json ./
+RUN npm ci
 
-# Copy custom nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY . .
+RUN npm run build
 
-# Expose port 80
-EXPOSE 80
+# Stage 2: Production
+FROM node:22-alpine AS production
+WORKDIR /app
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+ENV NODE_ENV=production
+ENV HOST=0.0.0.0
+ENV PORT=4321
 
+COPY --from=builder /app/dist ./dist
+COPY package*.json ./
+RUN npm ci --omit=dev
+
+EXPOSE 4321
+
+CMD ["node", "./dist/server/entry.mjs"]

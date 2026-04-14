@@ -1,0 +1,20 @@
+{
+  "name": "noah-van-potten-portfolio",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "start": "node ./dist/server/entry.mjs"
+  },
+  "overrides": {
+    "vite": "^7"
+  },
+  "dependencies": {
+    "@astrojs/node": "^10.0.4",
+    "@tailwindcss/vite": "^4.2.2",
+    "astro": "^6.1.6",
+    "tailwindcss": "^4.2.2"
+  }
+}
